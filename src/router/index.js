@@ -1,29 +1,60 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Vue from "vue";
+import VueRouter from "vue-router";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
+
+// 引入一级路由
+import Navigation from "@/views/bottomNav/Navigation";
+
+// 懒加载引入二级路由
+const Home = () => from("@/views/home/Home");
+const Category = () => from("@/views/category/Category");
+const Eat = () => from("@/views/eat/Eat");
+const Cart = () => from("@/views/cart/Cart");
+const Profile = () => from("@/views/profile/Profile");
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home
+    path: "/",
+    redirect: "/navigatin"
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: "/navigatin",
+    name: "navigation",
+    component: Navigation,
+    children: [
+      {
+        path: "/navigation",
+        redirect: "/navigatin/home"
+      },
+      {
+        path: "home",
+        name: Home
+      },
+      {
+        path: "category",
+        name: Category
+      },
+      {
+        path: "eat",
+        name: Eat
+      },
+      {
+        path: "cart",
+        name: Cart
+      },
+      {
+        path: "profile",
+        name: Profile
+      }
+    ]
   }
-]
+];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
   routes
-})
+});
 
-export default router
+export default router;
