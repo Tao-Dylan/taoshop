@@ -7,45 +7,50 @@ Vue.use(VueRouter);
 import Navigation from "@/views/bottomNav/Navigation";
 
 // 懒加载引入二级路由
-const Home = () => from("@/views/home/Home");
-const Category = () => from("@/views/category/Category");
-const Eat = () => from("@/views/eat/Eat");
-const Cart = () => from("@/views/cart/Cart");
-const Profile = () => from("@/views/profile/Profile");
+const Home = () => import("@/views/home/Home.vue");
+const Category = () => import("@/views/category/Category");
+const Eat = () => import("@/views/eat/Eat");
+const Cart = () => import("@/views/cart/Cart");
+const Profile = () => import("@/views/profile/Profile");
 
 const routes = [
   {
     path: "/",
-    redirect: "/navigatin"
+    redirect: "/navigation"
   },
   {
-    path: "/navigatin",
+    path: "/navigation",
     name: "navigation",
     component: Navigation,
     children: [
       {
         path: "/navigation",
-        redirect: "/navigatin/home"
+        redirect: "/navigation/home"
       },
       {
         path: "home",
-        name: Home
+        name: "home",
+        component: Home
       },
       {
         path: "category",
-        name: Category
+        name: "category",
+        component: Category
       },
       {
         path: "eat",
-        name: Eat
+        name: "eat",
+        component: Eat
       },
       {
         path: "cart",
-        name: Cart
+        name: "cart",
+        component: Cart
       },
       {
         path: "profile",
-        name: Profile
+        name: "profile",
+        component: Profile
       }
     ]
   }

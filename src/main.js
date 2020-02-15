@@ -3,7 +3,11 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import FastClick from "fastclick";
+
 import "./plugins/vant";
+import 'normalize.css'
+import './assets/css/base.css'
+import '@/common/filter'
 
 // 处理移动端延迟300毫秒的问题
 FastClick.attach(document.body);
