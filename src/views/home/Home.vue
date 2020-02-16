@@ -1,8 +1,8 @@
 <template>
   <div id="home">
-    <div v-if="!isShowLoading">
+    <div class="show_loading" v-if="!isShowLoading">
       <!-- 头部搜索框 -->
-      <Header></Header>
+      <Header-search />
       <!-- 轮播图 -->
       <Swiper :swiper-list="swiperList" />
       <!-- serves -->
@@ -20,7 +20,7 @@
       />
     </div>
     <!-- 加载中 -->
-    <van-loading v-else class="loading" type="spinner" size="50px" color="#1989fa" />
+    <show-loading v-else />
     <!-- 返回顶部 -->
     <back-top @scrollToTop="scrollToTop" />
   </div>
@@ -30,8 +30,9 @@
 import { getHomeData } from "@/network/home";
 import BackTop from "@/components/backtop/BackTop";
 import MyScroll from "@/components/scroll/MyScroll";
+import ShowLoading from "@/components/showLoading/ShowLoading";
 
-import Header from "./childComps/head/header.vue";
+import HeaderSearch from "./childComps/head/HeaderSearch";
 import Swiper from "./childComps/swiper/Swiper";
 import Serves from "./childComps/serves/Serves";
 import Grid from "./childComps/grid/Grid";
@@ -44,7 +45,8 @@ export default {
   components: {
     BackTop,
     MyScroll,
-    Header,
+    ShowLoading,
+    HeaderSearch,
     Swiper,
     Serves,
     Grid,
@@ -84,7 +86,7 @@ export default {
       });
       // this.showBackTop()
     },
-    // 监听货到顶部按钮
+    // 监听滚到顶部按钮
     scrollToTop() {
       console.log("back");
     }
@@ -94,15 +96,7 @@ export default {
 
 <style scoped lang="less">
 #home {
-  position: relative;
   width: 100%;
-  height: 1700px;
-  background-color: #f5f5f5;
-  .loading {
-    position: absolute;
-    left: 50%;
-    top: 40%;
-    transform: translate(-50%);
-  }
+  height: calc(100vh -50px);
 }
 </style>

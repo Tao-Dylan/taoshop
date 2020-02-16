@@ -1,97 +1,90 @@
 <template>
-  <div class="category_wrapper">
-    <my-scroll class="wrapper">
-      <div class="one">
-        <div class="content">
-          <div>1</div>
-          <div>2</div>
-          <div>3</div>
-          <div>4</div>
-          <div>5</div>
-          <div>6</div>
-          <div>7</div>
-          <div>8</div>
-          <div>9</div>
-          <div>10</div>
-          <div>11</div>
-          <div>12</div>
-          <div>13</div>
-          <div>14</div>
-          <div>15</div>
-          <div>16</div>
-          <div>17</div>
-          <div>18</div>
-          <div>19</div>
-          <div>20</div>
-          <div>21</div>
-          <div>22</div>
-          <div>23</div>
-          <div>24</div>
-          <div>25</div>
-          <div>26</div>
-          <div>27</div>
-          <div>28</div>
-          <div>29</div>
-          <div>30</div>
-          <div>31</div>
-          <div>32</div>
-          <div>33</div>
-          <div>34</div>
-          <div>35</div>
-          <div>36</div>
-          <div>37</div>
-          <div>38</div>
-          <div>39</div>
-          <div>40</div>
-          <div>41</div>
-          <div>42</div>
-          <div>43</div>
-          <div>44</div>
-          <div>45</div>
-          <div>46</div>
-          <div>47</div>
-          <div>48</div>
-          <div>49</div>
-          <div>50</div>
-        </div>
-      </div>
-    </my-scroll>
+  <div id="category_wrapper">
+    <!-- 顶部搜索栏 -->
+    <header-search />
+    <div v-if="!isShowLoading">
+      <!-- 左边大菜单 -->
+      <cate-left-tab @tabClick="tabClick" :category-left-list="categoryLeftList" />
+      <!-- 右边内容 -->
+      <category-right-content :category-right-list="categoryRightList" />
+    </div>
+    <!-- 加载中 -->
+    <show-loading v-else />
   </div>
 </template>
 
 <script>
+import { getCategoryLeftData, getCategoryRightData } from "@/network/category";
 import MyScroll from "@/components/scroll/MyScroll";
+import ShowLoading from "@/components/showLoading/ShowLoading";
+
+import HeaderSearch from "./childCopms/HeaderSearch";
+import CateLeftTab from "./childCopms/CateLeftTab";
+import CategoryRightContent from "./childCopms/CategoryRightContent";
+
 export default {
+  name: "HeadSearch",
   components: {
-    MyScroll
+    MyScroll,
+    ShowLoading,
+    HeaderSearch,
+    CateLeftTab,
+    CategoryRightContent
   },
   data() {
-    return {};
+    return {
+      isShowLoading: true, // 是否显示加载图标
+      categoryLeftList: [], // 左边标题数据
+      categoryRightList: [], // 左边标题数据
+      leftCurrentIndex: 0 // 左侧当前显示的标签索引
+    };
   },
-  created() {},
+  created() {
+    this._initData();
+  },
   mounted() {},
-  methods: {}
+  methods: {
+    // 初始化操作，请求数据
+    _initData() {
+      // 左边标题数据
+      getCategoryLeftData().then(res => {
+        const leftData = res.data;
+        // console.log(leftData);
+        if (leftData.success) {
+          this.categoryLeftList = leftData.data.cate;
+        }
+      });
+      // 右边详细数据
+      getCategoryRightData("/lk001").then(res => {
+        const rightData = res.data;
+        // console.log(rightData);
+        if (rightData.success) {
+          this.categoryRightList = rightData.data.cate;
+          console.log(this.categoryRightList);
+        }
+      });
+      // 隐藏Loading组件
+      this.isShowLoading = false;
+    },
+    tabClick(index) {
+      this.leftCurrentIndex = index;
+      getCategoryRightData(`/lk00${index + 1}`).then(res => {
+        const rightData = res.data;
+        // console.log(res);
+        if (rightData.success) {
+          this.categoryRightList = rightData.data.cate;
+          console.log(this.categoryRightList);
+        }
+      });
+    }
+  }
 };
 </script>
 
 <style scoped lang="less">
-.category_wrapper {
-  .wrapper {
-    width: 300px;
-    background-color: pink;
-    height: 300px;
-    // overflow: hidden;
-    .one {
-      display: inline-block;
-      .content {
-        // display: inline-block;
-        white-space: nowrap;
-
-        div {
-          display: inline-block;
-        }
-      }
-    }
-  }
+#category_wrapper {
+  width: 100%;
+  height: 100%;
+  background-color: #f5f5f5;
 }
 </style>

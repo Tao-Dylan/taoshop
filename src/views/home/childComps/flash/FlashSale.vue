@@ -14,7 +14,7 @@
     </div>
 
     <!-- 滚动区域-横向滚动 -->
-    <my-scroll class="scroll_width" :listenScroll="true">
+    <my-scroll class="scroll_width" :listenScroll="true" :scrollX="true" :scrollY="false">
       <!-- 限时抢购商品 -->
       <flash-goods :flash-sale-goods-list="flashSaleGoodsList" />
     </my-scroll>

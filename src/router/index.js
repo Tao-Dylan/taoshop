@@ -30,7 +30,10 @@ const routes = [
       {
         path: "home",
         name: "home",
-        component: Home
+        component: Home,
+        meta: { //是否数据缓存
+          keepAlive: true
+        }
       },
       {
         path: "category",

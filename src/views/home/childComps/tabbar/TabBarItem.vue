@@ -28,7 +28,7 @@ export default {
     return {};
   },
   created() {
-    console.log(this.tabbarAllGoodsList);
+    // console.log(this.tabbarAllGoodsList);
   },
   mounted() {},
   methods: {}
@@ -43,10 +43,13 @@ export default {
   flex-wrap: wrap;
   padding-left: 2%;
   padding-top: 2%;
-  font-size: 13px;
+
   background-color: #f5f5f5;
   .item {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
     width: 48%;
     margin-right: 2%;
     padding: 5px;
@@ -56,7 +59,9 @@ export default {
       width: 100%;
     }
     .item_title {
+      font-size: 13px;
       line-height: 18px;
+      color: #000;
       display: -webkit-box;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -64,10 +69,14 @@ export default {
       -webkit-box-orient: vertical;
     }
     .item_sub_title {
+      font-size: 12px;
       padding-bottom: 20px;
       line-height: 20px;
       font-size: 12px;
-      color: #808080
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: #808080;
     }
     .price {
       padding-right: 5px;

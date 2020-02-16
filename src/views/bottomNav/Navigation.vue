@@ -38,13 +38,17 @@
         />
       </van-tabbar-item>
     </van-tabbar>
-    <router-view></router-view>
+    <!-- 是否缓存界面 选择加载 -->
+    <keep-alive>
+      <router-view v-if="$route.meta.keepAlive"></router-view>
+    </keep-alive>
+    <router-view v-if="!$route.meta.keepAlive"></router-view>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'navigatiosn',
+  name: "navigatiosn",
   data() {
     return {
       active: 0,

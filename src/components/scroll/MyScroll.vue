@@ -1,5 +1,5 @@
 <template>
-  <div ref="wrapper">
+  <div class="scroll_wrapper" ref="wrapper">
     <slot></slot>
   </div>
 </template>
@@ -61,9 +61,8 @@ export default {
       this.scroll = new BScroll(this.$refs.wrapper, {
         probeType: this.probeType,
         click: this.click,
-        scrollX: true,
-        scrollY: false,
-        // bounce: false  // 回弹效果
+        scrollX: this.scrollX,
+        scrollY: this.scrollY
       });
       //派发滚动位置
       if (this.listenScroll) {
