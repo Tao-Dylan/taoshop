@@ -1,6 +1,6 @@
 <template>
   <div class="category_left_tab">
-    <my-scroll class="left_wrapper">
+    <my-scroll class="scroll_left_wrapper">
       <van-sidebar v-model="activeKey">
         <van-sidebar-item
           :class="{selected:currentIndex === index}"
@@ -51,14 +51,11 @@ export default {
 
 <style scoped lang="less">
 .category_left_tab {
-  height: 100vh;
-  width: 25%;
-  overflow: hidden;
-  // background-color: pink;
-  .left_wrapper {
-    height: calc(100vh - 104px);
-    // height: 100vh;
+  // height: 100vh;
+  .scroll_left_wrapper {
     width: 100%;
+    height: calc(100vh - 104px);
+    overflow: hidden;
     .van-sidebar {
       width: 100%;
       .van-sidebar-item {

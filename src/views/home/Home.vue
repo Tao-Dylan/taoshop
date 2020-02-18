@@ -18,6 +18,7 @@
         :tabbar-all-goods-list="tabbarAllGoodsList"
         :flash-sale-goods-list="flashSaleGoodsList"
       />
+      <van-divider>亲！！别上拉啦，人家是有底线的......</van-divider>
     </div>
     <!-- 加载中 -->
     <show-loading v-else />
@@ -31,6 +32,12 @@ import { getHomeData } from "@/network/home";
 import BackTop from "@/components/backtop/BackTop";
 import MyScroll from "@/components/scroll/MyScroll";
 import ShowLoading from "@/components/showLoading/ShowLoading";
+
+// 引入vuex
+import { mapMutations } from "vuex";
+// 引入消息发布订阅
+import PubSub from "pubsub-js";
+import { ADD_TO_CART } from "@/common/pubsub_type";
 
 import HeaderSearch from "./childComps/head/HeaderSearch";
 import Swiper from "./childComps/swiper/Swiper";
@@ -64,11 +71,27 @@ export default {
     };
   },
   created() {
-    this._getHomeData();
+    this._initData();
   },
-  mounted() {},
+  mounted() {
+    // 接受订阅
+    PubSub.subscribe(ADD_TO_CART, (msg, goods) => {
+      if (msg == ADD_TO_CART) {
+        // 添加数据
+        this.ADD_GOODS({
+          goodsID: goods.id,
+          goodsName: goods.name,
+          smallImage: goods.small_image,
+          goodsPrice: goods.price
+        });
+      }
+    });
+  },
   methods: {
-    _getHomeData() {
+    // vuex中的 ADD_TO_CART 方法
+    ...mapMutations(['ADD_GOODS']),
+    // 获取网络数据
+    _initData() {
       getHomeData().then(res => {
         const homeData = res.data;
         if (homeData.success) {
@@ -97,6 +120,7 @@ export default {
 <style scoped lang="less">
 #home {
   width: 100%;
-  height: calc(100vh -50px);
+  padding-bottom: 50px;
+  background-color: #f5f5f5;
 }
 </style>

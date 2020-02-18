@@ -2,7 +2,7 @@
   <div id="swiper">
     <van-swipe class="my-swipe" :autoplay="3000" indicator-color="#75a342">
       <van-swipe-item v-for="(item,index) in swiperList" :key="index">
-        <img v-lazy="item.icon_url" alt />
+        <img :src="item.icon_url" alt />
       </van-swipe-item>
     </van-swipe>
   </div>
@@ -31,7 +31,6 @@ export default {
 <style scoped >
 #swiper {
   width: 100%;
-  height: 236px;
 }
 /*  穿透样式 */
 #swiper /deep/ .van-swipe__indicator {

@@ -31,14 +31,19 @@ const routes = [
         path: "home",
         name: "home",
         component: Home,
-        meta: { //是否数据缓存
+        meta: {
+          //是否数据缓存
           keepAlive: true
         }
       },
       {
         path: "category",
         name: "category",
-        component: Category
+        component: Category,
+        meta: {
+          //是否数据缓存
+          keepAlive: true
+        }
       },
       {
         path: "eat",

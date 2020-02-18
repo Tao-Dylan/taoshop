@@ -62,21 +62,19 @@ export default {
         probeType: this.probeType,
         click: this.click,
         scrollX: this.scrollX,
-        scrollY: this.scrollY
+        scrollY: this.scrollY,
+        pullUpLoad: this.pullup
       });
       //派发滚动位置
       if (this.listenScroll) {
-        const me = this;
         this.scroll.on("scroll", pos => {
-          me.$emit("scroll", pos);
+          this.$emit("scroll", pos);
         });
       }
+      // 派发滚动到底部
       if (this.pullup) {
-        // scrollEnd表示scroll停止了，scrollToEnd表示滚动到底部了
-        this.scroll.on("scrollEnd", () => {
-          if (this.scroll.y <= this.scroll.maxScrollY + 50) {
-            this.$emit("scrollToEnd");
-          }
+        this.scroll.on("pullingUp", () => {
+          this.$emit("pullingUp");
         });
       }
       //开始滚动的时候派发一个事件

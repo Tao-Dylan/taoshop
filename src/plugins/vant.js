@@ -1,6 +1,7 @@
 import Vue from "vue";
 // 1.引入Tabbar
 import {
+  Dialog,
   Tabbar,
   TabbarItem,
   Icon,
@@ -16,10 +17,14 @@ import {
   Search,
   Sidebar,
   SidebarItem,
-  Divider
+  Divider,
+  Collapse,
+  CollapseItem,
+  Toast,
+  SubmitBar,
+  Checkbox
 } from "vant";
 
-// home页面用到的
 Vue.use(Tabbar).use(TabbarItem); // 一级路由导航栏
 Vue.use(Icon); // 自带图标
 Vue.use(Swipe); // 轮播图
@@ -32,10 +37,11 @@ Vue.use(Tab); // tab标签栏
 Vue.use(Tabs);
 Vue.use(Lazyload); //图片懒加载
 Vue.use(Divider); // 底部分割线
-
-// category用到的
 Vue.use(Search); //搜索框
 Vue.use(Sidebar); //侧边大菜单
 Vue.use(SidebarItem);
-
-// 共用的
+Vue.use(Collapse); // 折叠面板
+Vue.use(CollapseItem);
+Vue.use(Toast); // 轻提示
+Vue.use(SubmitBar); // 购物车提交
+Vue.use(Checkbox);

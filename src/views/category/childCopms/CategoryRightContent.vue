@@ -2,12 +2,12 @@
   <div class="category_right_content">
     <!-- 顶部tab栏 -->
     <my-scroll
-      ref="top_height"
+      ref="top_width"
       class="scroll_top_width"
       :scrollY="false"
       :scrollX="true"
       :listen-scroll="true"
-      :probe-ypet="3"
+      :probe-type="3"
       @scroll="scroll"
     >
       <div class="top_tab">
@@ -21,7 +21,7 @@
         >{{itemTab.name}}</div>
       </div>
     </my-scroll>
-    
+
     <my-scroll ref="content_height" class="scroll_content_height" :scrollY="true" :scrollX="false">
       <!-- 内容展示 -->
       <div class="goods_item_wrapper">
@@ -40,6 +40,8 @@
             :key="item.id"
           />
         </div>
+        <!-- 到底部上拉没有时显示 -->
+        <van-divider>亲！，移驾别的分类吧，到底啦...</van-divider>
       </div>
     </my-scroll>
   </div>
@@ -76,10 +78,10 @@ export default {
       this.currentIndex = index;
       const goodsElement = this.$refs.goods[index];
       const topElement = this.$refs.top_title[index];
-      this.$refs.top_height.scrollToElement(topElement, 200, -40);
+      this.$refs.top_width.scrollToElement(topElement, 200, -40);
 
       // 点击滚动到对应的标题商品内容
-      this.$refs.top_height.scrollToElement(0, 0);
+      this.$refs.top_width.scrollToElement(0, 0);
       this.$refs.content_height.scrollToElement(goodsElement, 200);
     },
     // 监听滚动位置
@@ -99,13 +101,11 @@ export default {
 
 <style scoped lang="less">
 .category_right_content {
-  position: absolute;
-  left: 26%;
-  right: 0;
-  top: 54px;
+  width: 100%;
+  // height: 100vh;
   .scroll_top_width {
     margin-left: 1%;
-    width: 100%;
+    width: 99%;
     height: 45px;
     font-size: 14px;
     border-bottom: 1px solid #ccc;
@@ -125,6 +125,7 @@ export default {
     }
   }
   .scroll_content_height {
+    width: 100%;
     height: calc(100vh - 149px);
     overflow: hidden;
     .goods_item_wrapper {

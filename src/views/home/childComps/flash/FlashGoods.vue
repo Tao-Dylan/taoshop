@@ -9,7 +9,7 @@
         <div class="price">
           <span class="new_price">{{item.price | moneyFormat}}</span>
           <span class="old_price">{{item.origin_price | moneyFormat}}</span>
-          <div class="buy_car">
+          <div class="buy_car" @click="addToCart(item)">
             <van-icon name="shopping-cart-o" size="14px" />
           </div>
         </div>
@@ -19,26 +19,35 @@
 </template>
 
 <script>
+// 引入消息发布订阅
+import PubSub from "pubsub-js";
+import { ADD_TO_CART } from "@/common/pubsub_type";
+import { Toast } from "vant";
+
 export default {
   name: "FlashGoods",
   props: {
     flashSaleGoodsList: {
       type: Array,
-      default() {
-        return [];
-      }
+      default: () => []
     }
   },
   data() {
     return {};
   },
-  created() {
-    // console.log(this.flashSaleGoodsList);
-  },
-  mounted() {
-    // console.log(this.flashSaleGoodsList);
-  },
-  methods: {}
+  created() {},
+  mounted() {},
+  methods: {
+    addToCart(goods) {
+      // 发送通知
+      // console.log(goods);
+      PubSub.publish(ADD_TO_CART, goods);
+      Toast({
+        message: "添加购物车",
+        duration: 800
+      });
+    }
+  }
 };
 </script>
 
@@ -55,6 +64,8 @@ export default {
       .top {
         img {
           width: 100%;
+          background-size: contain;
+          background-image: url("../../../../images/placeholderImg/product-img-load.png");
         }
         .title {
           white-space: normal;

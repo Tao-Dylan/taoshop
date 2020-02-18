@@ -2,11 +2,15 @@
   <div id="category_wrapper">
     <!-- 顶部搜索栏 -->
     <header-search />
-    <div v-if="!isShowLoading">
+    <div class="content_wrapper" v-if="!isShowLoading">
       <!-- 左边大菜单 -->
-      <cate-left-tab @tabClick="tabClick" :category-left-list="categoryLeftList" />
+      <cate-left-tab
+        class="left_wrapper"
+        @tabClick="tabClick"
+        :category-left-list="categoryLeftList"
+      />
       <!-- 右边内容 -->
-      <category-right-content :category-right-list="categoryRightList" />
+      <category-right-content class="right_wrapper" :category-right-list="categoryRightList" />
     </div>
     <!-- 加载中 -->
     <show-loading v-else />
@@ -86,5 +90,19 @@ export default {
   width: 100%;
   height: 100%;
   background-color: #f5f5f5;
+  overflow: hidden;
+  .content_wrapper {
+    position: absolute;
+    top: 54px;
+    left: 0;
+    right: 0;
+    display: flex;
+    .left_wrapper {
+      width: 25%;
+    }
+    .right_wrapper {
+      width: 75%;
+    }
+  }
 }
 </style>

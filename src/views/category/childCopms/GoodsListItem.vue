@@ -9,7 +9,7 @@
       <div class="price">
         <span class="new_price">{{item.price | moneyFormat }}</span>
         <span class="old_price">{{item.origin_price | moneyFormat}}</span>
-        <div class="buy_car" @click="addToCart">
+        <div class="buy_car" @click="addToCart(item)">
           <van-icon class="icon" name="shopping-cart-o" size="15px" />
         </div>
       </div>
@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
+import { Toast } from "vant";
 export default {
   name: "GoodsListItem",
   props: {
@@ -34,8 +36,21 @@ export default {
   created() {},
   mounted() {},
   methods: {
-    addToCart() {
-      this.$emit('addToCart')
+    ...mapMutations(["ADD_GOODS"]),
+    // 添加购物车功能
+    addToCart(goods) {
+      console.log(goods);
+      // 将数据保存在vuex的shopCart中
+      this.ADD_GOODS({
+        goodsID: goods.id,
+        goodsName: goods.name,
+        smallImage: goods.small_image,
+        goodsPrice: goods.price
+      });
+      Toast({
+        message: "已加入购物车",
+        duration: 800 // 展示的时间
+      });
     }
   }
 };

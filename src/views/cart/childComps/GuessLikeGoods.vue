@@ -1,26 +1,25 @@
 <template>
-  <div id="tab_bar_item">
-    <div class="item" v-for="(item,index) in tabbarAllGoodsList" :key="item.id">
-      <img v-lazy="item.small_image" alt />
-      <p class="item_title">{{item.name}}</p>
-      <p class="item_sub_title">{{item.spec}}</p>
-      <span class="price">{{item.price | moneyFormat}}</span>
-      <span class="originPrice">{{item.origin_price | moneyFormat}}</span>
-      <div class="buy_car" @click="addToCart(item)">
-        <van-icon class="icon" name="shopping-cart-o" />
-      </div>
-    </div>
+  <div class="good_list">
+    <ul class="goods_wrapper">
+      <li class="item" v-for="(item,index) in guessLikeGoodsList" :key="item.id">
+        <img :src="item.small_image" alt />
+        <p class="item_title">{{item.name}}</p>
+        <p class="item_sub_title">{{item.spec}}</p>
+        <span class="price">{{item.price | moneyFormat}}</span>
+        <span class="originPrice">{{item.origin_price | moneyFormat}}</span>
+        <div class="buy_car">
+          <van-icon class="icon" name="shopping-cart-o" />
+        </div>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
-import PubSub from "pubsub-js";
-import { ADD_TO_CART } from "@/common/pubsub_type";
-import { Toast } from "vant";
 export default {
-  name: "TabBarItem",
+  name: "GuessLikeGoods",
   props: {
-    tabbarAllGoodsList: {
+    guessLikeGoodsList: {
       type: Array,
       default: () => []
     }
@@ -30,25 +29,15 @@ export default {
   },
   created() {},
   mounted() {},
-  methods: {
-    addToCart(goods) {
-      // 发送通知
-      PubSub.publish(ADD_TO_CART, goods);
-      Toast({
-        message: "添加购物车",
-        duration: 800
-      });
-    }
-  }
+  methods: {}
 };
 </script>
 
 <style scoped lang="less">
-#tab_bar_item {
-  width: 100%;
+.goods_wrapper {
   display: flex;
-  justify-content: space-around;
   flex-wrap: wrap;
+  justify-content: space-around;
   padding-left: 2%;
   padding-top: 2%;
   background-color: #f5f5f5;
@@ -58,15 +47,13 @@ export default {
     flex-direction: column;
     justify-content: space-around;
     width: 48%;
-    margin-right: 2%;
     padding: 5px;
+    margin-right: 2%;
     margin-bottom: 2%;
+    border-radius: 10px;
     background-color: #fff;
     img {
       width: 100%;
-      // 等比缩小图片来适应元素的尺寸
-      background-size: contain;
-      background-image: url("../../../../images/placeholderImg/product-img-load.png");
     }
     .item_title {
       font-size: 13px;
