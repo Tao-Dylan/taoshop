@@ -40,6 +40,7 @@ export default {
   },
   data() {
     return {
+      // 倒计时设置时间
       time: 30 * 60 * 1000 * 100
     };
   },
@@ -50,6 +51,9 @@ export default {
       }
       return time;
     }
+  },
+  beforeDestroy() {
+    
   },
   created() {},
   mounted() {},

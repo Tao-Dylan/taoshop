@@ -5,7 +5,6 @@ import {
   SINGLE_SELECT_GOODS,
   ALL_SELECT_GOODS,
   DELETE_SELECT_GOODS,
-  DELETE_SINGLE_GOODS
 } from "./mutation-type";
 
 import Vue from "vue";
@@ -87,13 +86,13 @@ export default {
     setLocalStore("shopCart", state.shopCart);
   },
   // 5.全选商品
-  [ALL_SELECT_GOODS](state, { isSelected }) {
+  [ALL_SELECT_GOODS](state, { isSelectedAll }) {
     let shopCart = state.shopCart;
     Object.values(shopCart).forEach((goods, index) => {
       if (goods.checked) {
-        goods.checked = isSelected;
+        goods.checked = !isSelectedAll;
       } else {
-        Vue.set(goods, "checked", !isSelected); // 必须用Vue的set
+        Vue.set(goods, "checked", !isSelectedAll); // 必须用Vue的set
       }
     });
     // 将数据同步到state中

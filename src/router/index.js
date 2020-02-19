@@ -3,15 +3,25 @@ import VueRouter from "vue-router";
 
 Vue.use(VueRouter);
 
-// 引入一级路由
+// 引入一级路由组件
 import Navigation from "@/views/bottomNav/Navigation";
 
-// 懒加载引入二级路由
+// 懒加载引入二级路由组件
 const Home = () => import("@/views/home/Home.vue");
 const Category = () => import("@/views/category/Category");
 const Eat = () => import("@/views/eat/Eat");
 const Cart = () => import("@/views/cart/Cart");
 const Profile = () => import("@/views/profile/Profile");
+
+// 加载订单相关组件
+const Order = () => import("@/views/order/Order");
+const MyAddress = () => import("@/views/order/childComps/address/MyAddress");
+const AddAddress = () => import("@/views/order/childComps/address/AddAddress");
+const EditAddress = () =>
+  import("@/views/order/childComps/address/EditAddress");
+
+// 登录组件
+const Login = () => import("@/views/login/Login");
 
 const routes = [
   {
@@ -61,6 +71,35 @@ const routes = [
         component: Profile
       }
     ]
+  },
+  {
+    path: "/order",
+    name: "order",
+    component: Order,
+    children: [
+      {
+        path: "myAddress",
+        name: "myAddress",
+        component: MyAddress,
+        children: [
+          {
+            path: "addAddress",
+            name: "addAddress",
+            component: AddAddress
+          },
+          {
+            path: "editAddress",
+            name: "editAddress",
+            component: EditAddress
+          }
+        ]
+      }
+    ]
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: Login
   }
 ];
 

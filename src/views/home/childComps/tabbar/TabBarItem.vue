@@ -39,6 +39,10 @@ export default {
         duration: 800
       });
     }
+  },
+  // 取消通知订阅
+  beforeDestroy() {
+    PubSub.unsubscribe(ADD_TO_CART);
   }
 };
 </script>

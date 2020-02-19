@@ -10,7 +10,7 @@
     </div>
     <!-- 购物车有商品 -->
     <cart-goods v-show="totalCount" />
-    <!-- 猜你喜欢组件 -->
+    <!-- 猜你喜欢分割线 -->
     <van-divider :style="{ color: '#ccc', borderColor: '#ccc', padding: '0 16px' }">
       <van-icon name="like" style="padding:0 5px" color="red" />猜你喜欢
     </van-divider>
@@ -41,6 +41,7 @@ export default {
   },
   computed: {
     ...mapState(["shopCart"]),
+    // 判断购物车是否有商品
     totalCount() {
       return Object.keys(this.shopCart).length > 0;
     }

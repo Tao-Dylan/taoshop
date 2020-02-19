@@ -1,7 +1,12 @@
 <template>
   <div id="navigation">
     <van-tabbar class="active_tab" v-model="active" active-color="#75a342">
-      <van-tabbar-item @click="tab(index,item.name)" v-for="(item,index) in tabbars " :key="index" replace>
+      <van-tabbar-item
+        @click="tab(index,item.name)"
+        v-for="(item,index) in tabbars "
+        :key="index"
+        replace
+      >
         <span :class="currIndex == index ? active:''">{{item.title}}</span>
         <template slot="icon" slot-scope="props">
           <img :src="props.active ? item.active : item.normal" />
@@ -17,6 +22,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 export default {
   name: "navigatiosn",
   data() {
@@ -57,6 +63,9 @@ export default {
       ]
     };
   },
+  mounted() {
+    this._initData()
+  },
   watch: {
     active(val) {
       //  本地存储
@@ -64,10 +73,16 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['INIT_SHOP_CART']),
+    // 点击切换tab
     tab(index,name) {
       this.currIndex = index;
       this.$router.push(name);
       sessionStorage.setItem("tabbarActive", index);
+    },
+    // 初始化数据，获取本地存储
+    _initData() {
+      this.INIT_SHOP_CART()
     }
   }
 };

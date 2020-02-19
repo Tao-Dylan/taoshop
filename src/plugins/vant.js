@@ -22,7 +22,22 @@ import {
   CollapseItem,
   Toast,
   SubmitBar,
-  Checkbox
+  Checkbox,
+  NavBar,
+  Cell,
+  CellGroup,
+  Tag,
+  ContactCard,
+  ContactList,
+  ContactEdit,
+  RadioGroup,
+  Radio,
+  Overlay,
+  Switch,
+  Field,
+  AddressList,
+  AddressEdit,
+  Button
 } from "vant";
 
 Vue.use(Tabbar).use(TabbarItem); // 一级路由导航栏
@@ -45,3 +60,18 @@ Vue.use(CollapseItem);
 Vue.use(Toast); // 轻提示
 Vue.use(SubmitBar); // 购物车提交
 Vue.use(Checkbox);
+Vue.use(NavBar); //我的导航顶部
+Vue.use(Cell); //单元格
+Vue.use(CellGroup);
+Vue.use(Tag);
+Vue.use(ContactCard); // 添加联系人收货地址
+Vue.use(ContactList);
+Vue.use(ContactEdit);
+Vue.use(RadioGroup); // 单选框
+Vue.use(Radio);
+Vue.use(Overlay);
+Vue.use(Switch);
+Vue.use(Field);
+Vue.use(AddressList); // 地址列表
+Vue.use(AddressEdit); // 地址编辑
+Vue.use(Button); // 按钮

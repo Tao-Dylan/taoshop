@@ -47,6 +47,10 @@ export default {
         duration: 800
       });
     }
+  },
+  beforeDestroy() {
+    // 销毁订阅通知
+    PubSub.unsubscribe(ADD_TO_CART);
   }
 };
 </script>

@@ -1,6 +1,7 @@
 <template>
   <div class="cart_goods">
     <ul class="goods_wrapper">
+      <!-- 商品列表 -->
       <li class="item" v-for="(item,index) in shopCart" :key="item.id">
         <!-- 商品签的勾选按钮 -->
         <van-checkbox
@@ -23,22 +24,23 @@
           </div>
         </div>
       </li>
+      <!-- 提交订单 -->
       <van-submit-bar
         class="bottom_submit"
         :price="totalPrice"
         button-text="提交订单"
         @submit="onSubmit"
       >
-        <van-checkbox v-model="isSelectedSAll" @click="allSelect(isSelectedSAll)">全选</van-checkbox>
+        <van-checkbox v-model="isSelectedSAll">全选</van-checkbox>
       </van-submit-bar>
     </ul>
   </div>
 </template>
 
 <script>
-import { mapMutations, mapState } from "vuex";
+import { mapMutations, mapState, mapGetters } from "vuex";
 import { getLocalStore } from "@/common/global";
-import { Dialog } from "vant";
+import { Dialog, Toast } from "vant";
 export default {
   name: "CartGoods",
   data() {
@@ -51,28 +53,29 @@ export default {
   mounted() {},
   computed: {
     ...mapState(["shopCart"]),
+    ...mapGetters({
+      selectedGoodsNum: "SELECTED_GOODS_COUNT",
+      totalPrice: "SELECTED_GOODS_PRICE"
+    }),
     // 1. 是否全选
     isSelectedSAll: {
       get() {
+        let tag = this.totalCount > 0;
         let shopCart = this.shopCart;
-        let tag = Object.values(shopCart).every(
-          (goods, index) => goods.checked
-        );
-        return tag
+        Object.values(shopCart).forEach(goods => {
+          if (!goods.checked) {
+            tag = false;
+          }
+        });
+        return tag;
       },
       set(value) {
-        this.value = value;
+        let isSelectedAll = !value;
+        this.ALL_SELECT_GOODS({ isSelectedAll });
       }
     },
-    // 2. 计算总价
-    totalPrice() {
-      let totalPrice = 0;
-      Object.values(this.shopCart).forEach((goods, index) => {
-        if (goods.checked) {
-          totalPrice += goods.price * goods.num * 100;
-        }
-      });
-      return totalPrice;
+    totalCount() {
+      return Object.keys(this.shopCart).length;
     }
   },
   methods: {
@@ -118,14 +121,19 @@ export default {
     checkBoxClick(goodsID) {
       this.SINGLE_SELECT_GOODS({ goodsID });
     },
-    // 6. 全选的选中与否
-    allSelect(isSelectedSAll) {
-      console.log(isSelectedSAll);
-      this.ALL_SELECT_GOODS({ isSelectedSAll });
-    },
-
-    // 提交按钮
-    onSubmit() {}
+    // 提交结算按钮
+    onSubmit() {
+      // 当选中的商品大于0，跳转到订单页面
+      if (this.selectedGoodsNum > 0) {
+        // 跳转路由
+        this.$router.push("/order");
+      } else {
+        Toast({
+          message: "您还没选择宝贝哟",
+          duration: 1000
+        });
+      }
+    }
   }
 };
 </script>
